@@ -44,20 +44,20 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                   </div>
                 </li> --}}
-                
+                <li class="nav-item pull-right">
+                  <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                </li>
               </ul>
               
             </div>
         </div>
           </nav>
          
-          @if (auth()->user()->role != 'A')
-                return redirect(route('home'));
-          @else
+        
           <div class="container mt-10 p-4">
               @yield('content')
             </div>
-            @endif
+        
        
        
 

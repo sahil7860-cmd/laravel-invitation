@@ -40,9 +40,5 @@ class RegisterController extends Controller
       return redirect('login');
   }
 
-  public function sendInvitation() {
-    $invitations = Invitation::all();
-     
-    return view('auth.request',compact('invitations'));
-    }
+
 }

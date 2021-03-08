@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Mail;
 class InvitationController extends Controller
 {
     
+    // public function __construct(){
+    //     $this->middleware(['admin']);
+    // }
 
     public function store(Request $request){
 
@@ -32,4 +35,21 @@ class InvitationController extends Controller
             ->with('success', 'Invitation to register successfully requested. Please wait for registration link.');
 
         }
+
+        public function sendInvitation() {
+            $invitations = Invitation::all();
+             
+            return view('auth.request',compact('invitations'));
+            }
+        
+            public function enable(Request $request){
+              User::where('id', $request->id)->update(array('status' => 'A'));
+              return redirect()->back();
+            }
+        
+            public function disable(Request $request){
+              User::where('id', $request->id)->update(array('status' => 'D'));
+              return redirect()->back();
+              
+            }
 }

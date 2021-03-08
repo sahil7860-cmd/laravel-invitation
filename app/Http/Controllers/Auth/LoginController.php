@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Auth;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
@@ -16,21 +17,31 @@ class LoginController extends Controller
 
     public function loginUser(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
-
-        $credentials = $request->only('email', 'password', 'status');
-
-        dd($credentials);
-
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('admin');
+      $this->validate($request, [
+        'email'=> 'required|email',
+        'password'=> 'required',
+    ]);
+        if(!auth()->attempt($request->only('email','password'), $request->remember)){
+            return back()->with('status','Invalid login credentials');
         }
 
-        return redirect('login')->with('error', 'Oppes! You have entered invalid credentials');
+        // return redirect()->route('dashboard');
+
+        $user = User::where('email',$request->email)->get();
+         
+       if($user[0]->status == 'A'){
+        if($user[0]->role == 'A'){
+          return redirect()->route('admin');
+        }else{
+          return redirect()->route('client');
+
+        } 
+        }else{
+           return redirect()->route('home');
+        }
+        
+
+        return redirect('login')->with('error', 'Oppes! You have entered invalid credentials Or your account is deactivated');
     }
 
     public function logout() {

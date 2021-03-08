@@ -39,7 +39,8 @@
                     <tr>
                     <td>Email</td>   
                     <td>Registered At</td>   
-                    <td>Link</td>   
+                    <td>Link</td>  
+                 
                     </tr>
                 </thead> 
                 <tbody>
@@ -48,6 +49,7 @@
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->user_registered_at }}</td>
                             <td>{{ urldecode(route('register') . '?invitation_token=' .  $item->invitation_token)}}</td>
+                            
                         </tr>
                     @endforeach
                 </tbody>

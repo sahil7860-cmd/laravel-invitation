@@ -18,9 +18,39 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-      
+        <nav class="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
+            <div class="container">
+              @if (auth()->user())
+              <a class="navbar-brand" href="{{ route('client') }}">User Dashboard</a>
+              
+              @else
+              <a class="navbar-brand">Invitations</a>
+                  
+              @endif
+                
 
-        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+              <ul class="navbar-nav mr-auto float-right">
+                @auth
+                <li class="nav-item ">
+                  <a class="nav-link" >{{ auth()->user()->name }}</a>
+                </li>
+                @endauth
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+                </li>
+              </ul>
+              
+            </div>
+        </div>
+          </nav>
+
+        <div class="container m-10 p-4">
             @yield('content')
         </div>
 
