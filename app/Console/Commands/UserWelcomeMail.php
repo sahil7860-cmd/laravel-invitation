@@ -43,16 +43,16 @@ class UserWelcomeMail extends Command
            foreach ($user as $all)
            {
             $future_stamp =strtotime('+5 minutes', strtotime($all->user_registered_at));
-            $now_stamp    = date("Y-m-d H:i:s");
+            $now_stamp    = date("Y-m-d H:i");
 
-            if(strtotime($future_stamp) == strtotime($now_stamp) ){
+            if(date("Y-m-d H:i", $future_stamp) == $now_stamp ){
              Mail::raw("Welcome! You are successfully registered", function($message) use ($all)
              {
                  $message->from('admin@gmail.com');
                  $message->to($all->email)->subject('Welcome');
              });
             }
-            
+
          }
          $this->info('Minute Update has been send successfully');
     }
